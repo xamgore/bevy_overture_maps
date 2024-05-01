@@ -4,26 +4,32 @@ Bevy overture is an example of integration between <https://overturemaps.org> an
 ![v0.3.2 screenshot](https://github.com/alexichepura/bevy_overture_maps/assets/5582266/bb357732-953a-4b79-b759-ec26b343dff5)
 
 ## Howto
-To generate location - download overture maps data. Full size ~200G.
-https://github.com/OvertureMaps/data
-Example command: `aws s3 cp --region us-west-2 --no-sign-request --recursive s3://overturemaps-us-west-2/release/2023-07-26-alpha.0/ <DESTINATION>`
-Only segments `aws s3 cp --region us-west-2 --no-sign-request --recursive s3://overturemaps-us-west-2/release/2023-07-26-alpha.0/theme=transportation/type=segment/ ./theme=transportation/type=segment/`
-Only buildings `aws s3 cp --region us-west-2 --no-sign-request --recursive s3://overturemaps-us-west-2/release/2023-07-26-alpha.0/theme=buildings/ ./theme=buildings/`
 
-Example location
-`bevy_overture_maps_cli location <LON> <LAT> <NAME>`
-```sh
-cargo cli location 139.69170 35.68951 tokyo
-```
+1. Download [OvertureMaps data](https://github.com/OvertureMaps/data). It can be done with AWS CLI:
+   ```shell
+   # all, full size is 200GB
+   aws s3 cp --region us-west-2 --no-sign-request --recursive s3://overturemaps-us-west-2/release/2023-07-26-alpha.0/ \
+     <DESTINATION>
 
-!!! Fill `.env`, see `.env.example` !!!
+   # only segments & buildings
+   aws s3 cp --region us-west-2 --no-sign-request --recursive s3://overturemaps-us-west-2/release/2023-07-26-alpha.0/theme=transportation/type=segment/ ./theme=transportation/type=segment/
+   aws s3 cp --region us-west-2 --no-sign-request --recursive s3://overturemaps-us-west-2/release/2023-07-26-alpha.0/theme=buildings/ ./theme=buildings/
+   ```
 
-Run bevy.
-```sh
-cargo run --release -p=bevy_overture_maps_app
- # or
-cargo app
-```
+2. Extract the location, assuming the maps data is in `../overture/`:
+   ```sh
+   # bevy_overture_maps_cli location <LON> <LAT> <NAME>
+   cargo cli location 139.69170 35.68951 tokyo
+   ```
+
+3. **Fill in `.env`**, see `.env.example`
+
+4. Run bevy. 
+   ```sh
+   cargo run --release -p=bevy_overture_maps_app
+    # or
+   cargo app
+   ```
 
 ## Old
 One coordinate flipped and lots of bugs but it works.
